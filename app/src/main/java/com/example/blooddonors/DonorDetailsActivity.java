@@ -3,15 +3,22 @@ package com.example.blooddonors;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.example.blooddonors.donorestore.DonorStoreManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.util.Util;
+
+import org.w3c.dom.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DonorDetailsActivity extends AppCompatActivity {
 
@@ -33,26 +40,26 @@ public class DonorDetailsActivity extends AppCompatActivity {
         saveDonorBtn.setOnClickListener((v)-> saveDonor());
     }
 
-    void saveDonor(){
+    void saveDonor() {
         String donorName = nameEditText.getText().toString();
-        String donorBG= bloodGrpEditText.getText().toString();
+        String donorBG = bloodGrpEditText.getText().toString();
         String donorDept = deptEditText.getText().toString();
         String donorAddress = addressEditText.getText().toString();
         String donorPhone = phoneEditText.getText().toString();
 
-        if(donorName==null || donorName.isEmpty()) {
+        if (donorName == null || donorName.isEmpty()) {
             nameEditText.setError("Donors name is required!");
             return;
-        } else if (donorBG==null || donorBG.isEmpty()) {
+        } else if (donorBG == null || donorBG.isEmpty()) {
             bloodGrpEditText.setError("Blood Group is required!");
             return;
-        } else if (donorDept==null || donorDept.isEmpty()) {
+        } else if (donorDept == null || donorDept.isEmpty()) {
             deptEditText.setError("Blood Department is required!");
             return;
-        } else if (donorAddress==null || donorAddress.isEmpty()) {
+        } else if (donorAddress == null || donorAddress.isEmpty()) {
             addressEditText.setError("Address is required!");
             return;
-        } else if (donorPhone==null || donorPhone.isEmpty()) {
+        } else if (donorPhone == null || donorPhone.isEmpty()) {
             phoneEditText.setError("Phone number is required!");
             return;
         }
@@ -66,26 +73,10 @@ public class DonorDetailsActivity extends AppCompatActivity {
         donor.setPhone(donorPhone);
         donor.setTimestamp(Timestamp.now());
 
-        saveDonorToFirebase(donor);
+        DonorStoreManager.saveDonor(donor);
+        /**
+         * Toast here if needed.
+         */
 
     }
-
-    //save donor
-    void saveDonorToFirebase(Donor donor){
-        DocumentReference documentReference;
-        documentReference = Utility.getCollectionReferenceForDonors().document();
-        documentReference.set(donor).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    //donor added
-                    Utility.showToast(DonorDetailsActivity.this,"Donor added successfully!");
-                    finish();
-                }else{
-                    Utility.showToast(DonorDetailsActivity.this,"Donor adding FAILED!");
-                }
-            }
-        });
-    }
-
 }
