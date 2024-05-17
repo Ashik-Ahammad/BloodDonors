@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         addDonorBtn = findViewById(R.id.add_donor_btn);
-        recyclerView = findViewById(R.id.recycler_view);
+        //recyclerView = findViewById(R.id.recycler_view);
         menuBtn = findViewById(R.id.menu_btn);
 
         addDonorBtn.setOnClickListener((v)-> startActivity(new Intent(MainActivity.this, DonorDetailsActivity.class)));
