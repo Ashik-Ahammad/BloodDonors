@@ -77,6 +77,6 @@ public class DonorDetailsActivity extends AppCompatActivity {
         /**
          * Toast here if needed.
          */
-
+        finish();
     }
 }

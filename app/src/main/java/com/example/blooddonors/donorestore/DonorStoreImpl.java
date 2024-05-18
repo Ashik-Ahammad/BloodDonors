@@ -15,7 +15,10 @@ public class DonorStoreImpl implements DonorStore {
     public void saveDonor(Donor donor) {
         DocumentReference documentReference;
         documentReference = Utility.getCollectionReferenceForDonors().document();
-        documentReference.set(donor);
+        documentReference.set(donor).addOnCompleteListener(task -> {
+        if(task.isSuccessful())System.out.println("Donor :"+donor+" saved");
+        else if (task.isCanceled()) System.out.println("Saving donor failed");
+        });
     }
 
     @Override
@@ -34,6 +37,7 @@ public class DonorStoreImpl implements DonorStore {
                }
            }
         });
+        System.out.println("Code reached here.");
         return donors;
     }
 }
