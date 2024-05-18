@@ -3,6 +3,7 @@ package com.example.blooddonors.donorestore;
 import android.util.Log;
 
 import com.example.blooddonors.Donor;
+import com.example.blooddonors.DonorAdapter;
 import com.example.blooddonors.Utility;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -12,7 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DonorStoreImpl implements DonorStore {
-
+    private static DonorStoreImpl instance;
+    public static DonorStoreImpl getInstance(){
+        if(instance == null){
+            instance = new DonorStoreImpl();
+        }
+        return instance;
+    }
     @Override
     public void saveDonor(Donor donor) {
         DocumentReference documentReference;
@@ -30,17 +37,21 @@ public class DonorStoreImpl implements DonorStore {
     }
 
     @Override
-    public List<Donor> getAllDonorDeets() {
-        List<Donor> donors = new ArrayList<>();
+    public void getAllDonors(DonorDataListener listener) {
         CollectionReference reference = Utility.getCollectionReferenceForDonors();
-        reference.get().addOnCompleteListener(task -> {
-           if(task.isSuccessful()){
-               for(QueryDocumentSnapshot doc : task.getResult()){
-                   donors.add(doc.toObject(Donor.class));
-               }
-           }
+        reference.addSnapshotListener((snapshot, error) -> {
+            if (error != null) {
+                // Handle error (optional)
+                return;
+            }
+
+            if (snapshot != null) {
+                List<Donor> donors = new ArrayList<>();
+                for (QueryDocumentSnapshot doc : snapshot) {
+                    donors.add(doc.toObject(Donor.class));
+                }
+                listener.onDonorsFetched(donors);
+            }
         });
-        Log.i("a","Code reached here");
-        return donors;
     }
 }

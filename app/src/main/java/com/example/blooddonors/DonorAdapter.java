@@ -16,10 +16,16 @@ import java.util.List;
 public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHolder>{
     List<Donor> donors;
     LayoutInflater mInflater;
+    public DonorAdapter(Context context) {
+        this.mInflater = LayoutInflater.from(context);
+    }
 
     public DonorAdapter(List<Donor> donors, Context context) {
         this.donors = donors;
         this.mInflater = LayoutInflater.from(context);
+    }
+    public void setDonors(List<Donor> donors) {
+        this.donors = donors;
     }
 
 
@@ -61,6 +67,7 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
 
     @Override
     public int getItemCount() {
+        if(donors == null) return 0;
         return donors.size();
     }
 }

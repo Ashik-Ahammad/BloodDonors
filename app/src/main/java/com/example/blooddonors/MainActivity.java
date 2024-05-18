@@ -10,11 +10,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.blooddonors.donorestore.DonorDataListener;
+import com.example.blooddonors.donorestore.DonorStoreImpl;
 import com.example.blooddonors.donorestore.DonorStoreManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,8 +64,31 @@ public class MainActivity extends AppCompatActivity {
     void setupRecyclerView(){
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<Donor> donors = DonorStoreManager.getAllDonorDeets();
-        DonorAdapter adapter = new DonorAdapter(donors,getApplicationContext());
+
+
+        DonorAdapter adapter = new DonorAdapter(getApplicationContext());
+        DonorStoreImpl.getInstance().getAllDonors(new DonorDataListener() {
+            @Override
+            public void onDonorsFetched(List<Donor> donors) {
+                adapter.setDonors(donors);
+                adapter.notifyDataSetChanged();
+            }
+        });
+//        adapter.setDonors(getDummyDonors());
         recyclerView.setAdapter(adapter);
+    }
+     List<Donor> getDummyDonors(){
+        List<Donor> list = new ArrayList<>();
+        for(int i=0;i<10;i++){
+            Donor donor = new Donor();
+            donor.setName(UUID.randomUUID().toString());
+            donor.setPhone(UUID.randomUUID().toString());
+            donor.setDepartment(UUID.randomUUID().toString());
+            donor.setTimestamp(Timestamp.now());
+            donor.setBloodGrp("B+");
+            donor.setAddress("Dhaka");
+            list.add(donor);
+        }
+        return list;
     }
 }

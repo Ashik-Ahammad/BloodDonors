@@ -7,5 +7,5 @@ import java.util.List;
 public interface DonorStore {
     void saveDonor(Donor donor);
     Donor getDonor(String key);
-    List<Donor> getAllDonorDeets();
+    void getAllDonors(DonorDataListener listener);
 }

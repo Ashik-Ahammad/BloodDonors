@@ -15,7 +15,5 @@ public class DonorStoreManager {
     public static void saveDonor(Donor donor){
         store.saveDonor(donor);
     }
-    public static List<Donor> getAllDonorDeets(){
-        return store.getAllDonorDeets();
-    }
+
 }
