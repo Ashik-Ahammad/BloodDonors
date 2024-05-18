@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setupRecyclerView(){
-
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setAdapter(new DonorAdapter());
     }
 }
