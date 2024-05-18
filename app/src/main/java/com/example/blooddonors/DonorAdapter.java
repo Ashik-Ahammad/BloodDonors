@@ -1,5 +1,6 @@
 package com.example.blooddonors;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +9,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.blooddonors.donorestore.DonorStoreManager;
 
 import java.util.List;
 
 
 public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHolder>{
-    List<Donor> donors = DonorStoreManager.getAllDonorDeets();
+    List<Donor> donors;
+    LayoutInflater mInflater;
+
+    public DonorAdapter(List<Donor> donors, Context context) {
+        this.donors = donors;
+        this.mInflater = LayoutInflater.from(context);
+    }
+
+
     class DonorViewHolder extends RecyclerView.ViewHolder{
 
         TextView donorNameTextView, BGTextView, timeStampTextView;
@@ -40,7 +48,7 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
     @NonNull
     @Override
     public DonorViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_donor_item,viewGroup,false);
+        View view = mInflater.inflate(R.layout.recycler_donor_item,viewGroup,false);
         return new DonorViewHolder(view);
     }
 

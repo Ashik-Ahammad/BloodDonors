@@ -9,8 +9,11 @@ import android.widget.PopupMenu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.blooddonors.donorestore.DonorStoreManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         addDonorBtn = findViewById(R.id.add_donor_btn);
-        //recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         menuBtn = findViewById(R.id.menu_btn);
 
         addDonorBtn.setOnClickListener((v)-> startActivity(new Intent(MainActivity.this, DonorDetailsActivity.class)));
@@ -53,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setupRecyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new DonorAdapter());
+        recyclerView = findViewById(R.id.recycler_view);
+
+        List<Donor> donors = DonorStoreManager.getAllDonorDeets();
+        DonorAdapter adapter = new DonorAdapter(donors,getApplicationContext());
+        recyclerView.setAdapter(adapter);
     }
 }

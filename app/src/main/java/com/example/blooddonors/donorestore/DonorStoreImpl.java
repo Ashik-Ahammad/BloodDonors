@@ -1,5 +1,7 @@
 package com.example.blooddonors.donorestore;
 
+import android.util.Log;
+
 import com.example.blooddonors.Donor;
 import com.example.blooddonors.Utility;
 import com.google.firebase.firestore.CollectionReference;
@@ -16,8 +18,9 @@ public class DonorStoreImpl implements DonorStore {
         DocumentReference documentReference;
         documentReference = Utility.getCollectionReferenceForDonors().document();
         documentReference.set(donor).addOnCompleteListener(task -> {
-        if(task.isSuccessful())System.out.println("Donor :"+donor+" saved");
-        else if (task.isCanceled()) System.out.println("Saving donor failed");
+
+        if(task.isSuccessful())Log.i("a","Donor saved");
+        else if (task.isCanceled()) Log.i("a","Couldn't save donor");
         });
     }
 
@@ -37,7 +40,7 @@ public class DonorStoreImpl implements DonorStore {
                }
            }
         });
-        System.out.println("Code reached here.");
+        Log.i("a","Code reached here");
         return donors;
     }
 }
