@@ -7,6 +7,7 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blooddonors.donorestore.DonorStoreManager;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     void setupRecyclerView(){
         recyclerView = findViewById(R.id.recycler_view);
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Donor> donors = DonorStoreManager.getAllDonorDeets();
         DonorAdapter adapter = new DonorAdapter(donors,getApplicationContext());
         recyclerView.setAdapter(adapter);
