@@ -1,6 +1,10 @@
 package com.example.blooddonors;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +22,22 @@ import java.util.List;
 public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHolder>{
     List<Donor> donors;
     LayoutInflater mInflater;
+    Context context;
     public DonorAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     public DonorAdapter(List<Donor> donors, Context context) {
         this.donors = donors;
         this.mInflater = LayoutInflater.from(context);
+        this.context = context;
     }
+
+    public Context getContext() {
+        return context;
+    }
+
     public void setDonors(List<Donor> donors) {
         this.donors = donors;
     }

@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     void showMenu(){
         PopupMenu popupMenu  = new PopupMenu(MainActivity.this,menuBtn);
+        popupMenu.getMenu().add(Utility.getCurrentUser().getDisplayName());
         popupMenu.getMenu().add("Logout");
         popupMenu.show();
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
