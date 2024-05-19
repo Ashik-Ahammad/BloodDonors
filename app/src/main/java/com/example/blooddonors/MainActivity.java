@@ -42,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
         menuBtn = findViewById(R.id.menu_btn);
         searchBar = findViewById(R.id.search_bar);
 
-        addDonorBtn.setOnClickListener((v)-> startActivity(new Intent(MainActivity.this, DonorDetailsActivity.class)));
+        addDonorBtn.setOnClickListener((v)-> {
+            Intent intent = new Intent(MainActivity.this, DonorDetailsActivity.class);
+            intent.putExtra("edit",false);
+            startActivity(intent);
+        });
         menuBtn.setOnClickListener((v)->showMenu());
         setupRecyclerView();
         setupSearchBar();
@@ -92,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        DonorAdapter adapter = new DonorAdapter(getApplicationContext());
+        DonorAdapter adapter = new DonorAdapter(this);
         DonorStoreImpl.getInstance().getAllDonors(new DonorDataListener() {
             @Override
             public void onDonorsFetched(List<Donor> donors) {

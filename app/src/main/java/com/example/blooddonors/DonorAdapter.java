@@ -6,17 +6,24 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.blooddonors.donorestore.DeletedDonorCallBack;
+import com.example.blooddonors.donorestore.DonorStoreImpl;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHolder>{
@@ -85,6 +92,47 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
         Date date = donors.get(position).timestamp.toDate();
         holder.getTimeStampTextView().setText(date.toString());
         if(Utility.getCurrentUser().getUid().equals(donors.get(position).getDonorId()))holder.getImgBtn().setVisibility(View.VISIBLE);
+        holder.getImgBtn().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu menu = new PopupMenu(context,holder.getImgBtn());
+                menu.getMenu().add("Edit");
+                menu.getMenu().add("Delete");
+                menu.show();
+                Donor clickedDonor = donors.get(holder.getAdapterPosition());
+                String docId = clickedDonor.getDocId();
+
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        if(Objects.equals(menuItem.getTitle(), "Edit")){
+                            Intent intent = new Intent(context,DonorDetailsActivity.class);
+
+                            if(docId!=null){
+                                intent.putExtra("doc_id",docId);
+                            }
+                            intent.putExtra("edit",true);
+                            ContextCompat.startActivity(context,intent,null);
+                            return true;
+                        }
+                        else if(Objects.equals(menuItem.getTitle(), "Delete")) {
+                            DonorStoreImpl.getInstance().deleteDonor(docId, new DeletedDonorCallBack() {
+                                @Override
+                                public void onDeletedDonor(boolean success) {
+                                    if(success){
+                                        Utility.showToast(context,"Deleted Successfully");
+                                    }
+                                    else Utility.showToast(context,"Couldn't delete doner.Try" +
+                                            " again later");
+                                }
+                            });
+                        }
+                        return false;
+                    }
+                });
+
+            }
+        });
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.blooddonors;
 import com.google.firebase.Timestamp;
 
 public class Donor {
+    String docId;
     String donorId;
     String name;
     String bloodGrp;
@@ -14,7 +15,8 @@ public class Donor {
 
     }
 
-    public Donor(String donorId, String name, String bloodGrp, String department, String address, String phone, Timestamp timestamp) {
+    public Donor(String docId,String donorId, String name, String bloodGrp, String department, String address, String phone, Timestamp timestamp) {
+        this.docId = docId;
         this.donorId = donorId;
         this.name = name;
         this.bloodGrp = bloodGrp;
@@ -24,6 +26,14 @@ public class Donor {
         this.timestamp = timestamp;
     }
 //name get & set
+
+    public String getDocId() {
+        return docId;
+    }
+
+    public void setDocId(String docId) {
+        this.docId = docId;
+    }
 
     public String getDonorId() {
         return donorId;

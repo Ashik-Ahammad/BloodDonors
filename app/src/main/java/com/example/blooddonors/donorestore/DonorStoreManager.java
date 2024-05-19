@@ -1,8 +1,12 @@
 package com.example.blooddonors.donorestore;
 
+import android.os.Build;
+
 import com.example.blooddonors.Donor;
+import com.example.blooddonors.DonorAdapter;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class DonorStoreManager {
     /**
@@ -14,6 +18,9 @@ public class DonorStoreManager {
 
     public static void saveDonor(Donor donor){
         store.saveDonor(donor);
+    }
+    public static void editExistingDonor(String docId,Donor updatedDonor){
+        store.editDonor(docId,updatedDonor);
     }
 
 }

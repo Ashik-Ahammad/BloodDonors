@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.example.blooddonors.donorestore.DonorStoreImpl;
 import com.example.blooddonors.donorestore.DonorStoreManager;
+import com.example.blooddonors.donorestore.GetDonorCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -19,28 +23,48 @@ import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DonorDetailsActivity extends AppCompatActivity {
 
     EditText nameEditText,bloodGrpEditText,deptEditText,addressEditText,phoneEditText;
+    TextView pageTitle;
     ImageButton saveDonorBtn;
+    String existingDonorDocId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_details);
 
+        Intent intent = getIntent();
+        boolean edit_flag = Objects.requireNonNull(intent.getExtras()).getBoolean("edit");
+        pageTitle = findViewById(R.id.page_title);
         nameEditText = findViewById(R.id.donor_name_text);
         bloodGrpEditText = findViewById(R.id.donor_bg_text);
         deptEditText = findViewById(R.id.donor_dept_text);
         addressEditText = findViewById(R.id.donor_address_text);
         phoneEditText = findViewById(R.id.donor_number_text);
         saveDonorBtn = findViewById(R.id.save_donor_btn);
+        if(edit_flag){
+            existingDonorDocId = intent.getStringExtra("doc_id");
+            pageTitle.setText("Edit your enlistment");
 
-        saveDonorBtn.setOnClickListener((v)-> saveDonor());
+            DonorStoreImpl.getInstance().getDonor(existingDonorDocId, new GetDonorCallback() {
+                @Override
+                public void onDonorFetched(Donor donor) {
+                    nameEditText.setHint(donor.getName());
+                    bloodGrpEditText.setHint(donor.getBloodGrp());
+                    deptEditText.setHint(donor.getDepartment());
+                    addressEditText.setHint(donor.getAddress());
+                    phoneEditText.setHint(donor.getPhone());
+                }
+            });
+        }
+        saveDonorBtn.setOnClickListener((v)-> saveDonor(edit_flag));
     }
 
-    void saveDonor() {
+    void saveDonor(boolean existingDonor) {
         String donorName = nameEditText.getText().toString();
         String donorBG = bloodGrpEditText.getText().toString();
         String donorDept = deptEditText.getText().toString();
@@ -74,7 +98,8 @@ public class DonorDetailsActivity extends AppCompatActivity {
         donor.setPhone(donorPhone);
         donor.setTimestamp(Timestamp.now());
 
-        DonorStoreManager.saveDonor(donor);
+        if(existingDonor) DonorStoreImpl.getInstance().editDonor(existingDonorDocId,donor);
+        else DonorStoreManager.saveDonor(donor);
         /**
          * Toast here if needed.
          */

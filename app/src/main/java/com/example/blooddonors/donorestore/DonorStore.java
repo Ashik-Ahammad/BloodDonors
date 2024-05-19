@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface DonorStore {
     void saveDonor(Donor donor);
-    Donor getDonor(String key);
+    void editDonor(String docId,Donor newDonor);
+    void getDonor(String docId,GetDonorCallback callback);
     void getAllDonors(DonorDataListener listener);
+    void deleteDonor(String docId,DeletedDonorCallBack cb);
 }
