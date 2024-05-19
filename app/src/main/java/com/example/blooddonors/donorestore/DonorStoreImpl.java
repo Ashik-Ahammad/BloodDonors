@@ -7,6 +7,7 @@ import com.example.blooddonors.DonorAdapter;
 import com.example.blooddonors.Utility;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -39,9 +40,9 @@ public class DonorStoreImpl implements DonorStore {
     @Override
     public void getAllDonors(DonorDataListener listener) {
         CollectionReference reference = Utility.getCollectionReferenceForDonors();
-        reference.addSnapshotListener((snapshot, error) -> {
+        reference.orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener((snapshot, error) -> {
             if (error != null) {
-                // Handle error (optional)
+                // TODO: Handle error (optional)
                 return;
             }
 

@@ -66,6 +66,7 @@ public class DonorDetailsActivity extends AppCompatActivity {
 
         //create new donor
         Donor donor = new Donor();
+        donor.setDonorId(Utility.getCurrentUser().getUid());
         donor.setName(donorName);
         donor.setBloodGrp(donorBG);
         donor.setDepartment(donorDept);
@@ -77,6 +78,7 @@ public class DonorDetailsActivity extends AppCompatActivity {
         /**
          * Toast here if needed.
          */
+        Utility.showToast(this,"Donor Added Successfully");
         finish();
     }
 }

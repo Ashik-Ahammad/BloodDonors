@@ -2,7 +2,10 @@ package com.example.blooddonors;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
@@ -16,6 +19,7 @@ import com.example.blooddonors.donorestore.DonorStoreManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addDonorBtn;
     RecyclerView recyclerView;
     ImageButton menuBtn;
+    EditText searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +40,12 @@ public class MainActivity extends AppCompatActivity {
         addDonorBtn = findViewById(R.id.add_donor_btn);
         recyclerView = findViewById(R.id.recycler_view);
         menuBtn = findViewById(R.id.menu_btn);
+        searchBar = findViewById(R.id.search_bar);
 
         addDonorBtn.setOnClickListener((v)-> startActivity(new Intent(MainActivity.this, DonorDetailsActivity.class)));
         menuBtn.setOnClickListener((v)->showMenu());
         setupRecyclerView();
+        setupSearchBar();
     }
 
     void showMenu(){
@@ -59,6 +66,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void setupSearchBar() {
+//        searchBar.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                Utility.showToast(getApplicationContext(),charSequence.toString());
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
     }
 
     void setupRecyclerView(){

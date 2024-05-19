@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,12 +34,14 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
     class DonorViewHolder extends RecyclerView.ViewHolder{
 
         TextView donorNameTextView, BGTextView, timeStampTextView;
+        ImageButton imgBtn;
 
         public DonorViewHolder(@NonNull View itemView) {
             super(itemView);
             donorNameTextView = itemView.findViewById(R.id.donor_name_text_view);
             BGTextView = itemView.findViewById(R.id.donor_BG_text_view);
             timeStampTextView = itemView.findViewById(R.id.donor_timestamp_text_view);
+            imgBtn = itemView.findViewById(R.id.edit_btn);
         }
         public TextView getDonorNameTextView() {
             return donorNameTextView;
@@ -49,6 +53,10 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
 
         public TextView getTimeStampTextView() {
             return timeStampTextView;
+        }
+
+        public ImageButton getImgBtn() {
+            return imgBtn;
         }
     }
     @NonNull
@@ -62,7 +70,9 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
     public void onBindViewHolder(@NonNull DonorViewHolder holder, int position) {
         holder.getDonorNameTextView().setText(donors.get(position).name);
         holder.getBGTextView().setText(donors.get(position).bloodGrp);
-        holder.getTimeStampTextView().setText(donors.get(position).timestamp.toString());
+        Date date = donors.get(position).timestamp.toDate();
+        holder.getTimeStampTextView().setText(date.toString());
+        if(Utility.getCurrentUser().getUid().equals(donors.get(position).getDonorId()))holder.getImgBtn().setVisibility(View.VISIBLE);
     }
 
     @Override
