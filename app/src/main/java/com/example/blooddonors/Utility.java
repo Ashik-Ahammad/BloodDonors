@@ -13,9 +13,12 @@ public class Utility {
         Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
     }
 
-    static CollectionReference getCollectionReferenceForDonors(){
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        return FirebaseFirestore.getInstance().collection("DonorList").document(currentUser.getUid()).collection("my_data");
+    public static CollectionReference getCollectionReferenceForDonors(){
+        return FirebaseFirestore.getInstance().collection("DonorList");
+//                .document(currentUser.getUid()).collection("my_data");
+    }
+    public static FirebaseUser getCurrentUser(){
+        return FirebaseAuth.getInstance().getCurrentUser();
     }
 
 
