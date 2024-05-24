@@ -27,7 +27,7 @@ import java.util.Objects;
 
 public class DonorDetailsActivity extends AppCompatActivity {
 
-    EditText nameEditText,bloodGrpEditText,deptEditText,addressEditText,phoneEditText;
+    EditText nameEditText,bloodGrpEditText,deptEditText,addressEditText,phoneEditText,lastDonationDateEditText;
     TextView pageTitle;
     ImageButton saveDonorBtn;
     String existingDonorDocId;
@@ -45,7 +45,9 @@ public class DonorDetailsActivity extends AppCompatActivity {
         deptEditText = findViewById(R.id.donor_dept_text);
         addressEditText = findViewById(R.id.donor_address_text);
         phoneEditText = findViewById(R.id.donor_number_text);
+        lastDonationDateEditText = findViewById(R.id.date_input);
         saveDonorBtn = findViewById(R.id.save_donor_btn);
+
         if(edit_flag){
             existingDonorDocId = intent.getStringExtra("doc_id");
             pageTitle.setText("Edit your enlistment");
@@ -56,6 +58,7 @@ public class DonorDetailsActivity extends AppCompatActivity {
                     nameEditText.setHint(donor.getName());
                     bloodGrpEditText.setHint(donor.getBloodGrp());
                     deptEditText.setHint(donor.getDepartment());
+                    lastDonationDateEditText.setHint(donor.getLastDonationDate());
                     addressEditText.setHint(donor.getAddress());
                     phoneEditText.setHint(donor.getPhone());
                 }
@@ -70,6 +73,7 @@ public class DonorDetailsActivity extends AppCompatActivity {
         String donorDept = deptEditText.getText().toString();
         String donorAddress = addressEditText.getText().toString();
         String donorPhone = phoneEditText.getText().toString();
+        String donationDate = lastDonationDateEditText.getText().toString();
 
         if (donorName == null || donorName.isEmpty()) {
             nameEditText.setError("Donors name is required!");
@@ -86,6 +90,8 @@ public class DonorDetailsActivity extends AppCompatActivity {
         } else if (donorPhone == null || donorPhone.isEmpty()) {
             phoneEditText.setError("Phone number is required!");
             return;
+        } else if (donationDate == null || donationDate.isEmpty()) {
+            lastDonationDateEditText.setError(("Last date of donation is required!"));
         }
 
         //create new donor
@@ -94,6 +100,7 @@ public class DonorDetailsActivity extends AppCompatActivity {
         donor.setName(donorName);
         donor.setBloodGrp(donorBG);
         donor.setDepartment(donorDept);
+        donor.setLastDonationDate(donationDate);
         donor.setAddress(donorAddress);
         donor.setPhone(donorPhone);
         donor.setTimestamp(Timestamp.now());

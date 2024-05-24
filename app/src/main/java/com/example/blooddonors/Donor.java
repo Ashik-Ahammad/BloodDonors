@@ -9,13 +9,14 @@ public class Donor {
     String bloodGrp;
     String department;
     String address;
+    String lastDonationDate;
     String phone;
     Timestamp timestamp;
     public Donor() {
 
     }
 
-    public Donor(String docId,String donorId, String name, String bloodGrp, String department, String address, String phone, Timestamp timestamp) {
+    public Donor(String docId,String donorId, String name, String bloodGrp, String department, String address, String phone, String lastDonationDate, Timestamp timestamp) {
         this.docId = docId;
         this.donorId = donorId;
         this.name = name;
@@ -23,6 +24,7 @@ public class Donor {
         this.department = department;
         this.address = address;
         this.phone = phone;
+        this.lastDonationDate = lastDonationDate;
         this.timestamp = timestamp;
     }
 //name get & set
@@ -86,6 +88,10 @@ public class Donor {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    //lastDate get set
+    public String getLastDonationDate (){ return lastDonationDate; }
+    public void setLastDonationDate (String lastDonationDate){this.lastDonationDate = lastDonationDate; }
 
     //time get & set
     public Timestamp getTimestamp() {

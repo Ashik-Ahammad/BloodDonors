@@ -57,8 +57,10 @@ public class MainActivity extends AppCompatActivity {
         popupMenu.getMenu().add(Utility.getCurrentUser().getEmail());
         popupMenu.getMenu().add("Logout");
         popupMenu.show();
+
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
+            //Logout
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if(menuItem.getTitle()=="Logout"){
@@ -72,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+    /*   search bar setup   */
     private void setupSearchBar() {
 //        searchBar.addTextChangedListener(new TextWatcher() {
 //            @Override

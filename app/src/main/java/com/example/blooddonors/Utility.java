@@ -15,7 +15,6 @@ public class Utility {
 
     public static CollectionReference getCollectionReferenceForDonors(){
         return FirebaseFirestore.getInstance().collection("DonorList");
-//                .document(currentUser.getUid()).collection("my_data");
     }
     public static FirebaseUser getCurrentUser(){
         return FirebaseAuth.getInstance().getCurrentUser();

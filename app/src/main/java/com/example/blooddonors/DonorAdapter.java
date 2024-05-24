@@ -52,13 +52,17 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
 
     class DonorViewHolder extends RecyclerView.ViewHolder{
 
-        TextView donorNameTextView, BGTextView, timeStampTextView;
+        TextView donorNameTextView, BGTextView, donorAddressTextView, donorDeptTextView,donorPhoneTextView,donorLastDonationTextView, timeStampTextView;
         ImageButton imgBtn;
 
         public DonorViewHolder(@NonNull View itemView) {
             super(itemView);
             donorNameTextView = itemView.findViewById(R.id.donor_name_text_view);
             BGTextView = itemView.findViewById(R.id.donor_BG_text_view);
+            donorAddressTextView = itemView.findViewById(R.id.donor_address_text_view);
+            donorDeptTextView = itemView.findViewById(R.id.donor_dept_text_view);
+            donorPhoneTextView = itemView.findViewById(R.id.donor_phone_text_view);
+            donorLastDonationTextView = itemView.findViewById(R.id.donor_lastDonationTime_text_view);
             timeStampTextView = itemView.findViewById(R.id.donor_timestamp_text_view);
             imgBtn = itemView.findViewById(R.id.edit_btn);
         }
@@ -68,6 +72,22 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
 
         public TextView getBGTextView() {
             return BGTextView;
+        }
+
+        public TextView getDonorAddressTextView() {
+            return donorAddressTextView;
+        }
+
+        public TextView getDonorDeptTextView() {
+            return donorDeptTextView;
+        }
+
+        public TextView getDonorPhoneTextView() {
+            return donorPhoneTextView;
+        }
+
+        public TextView getDonorLastDonationTextView() {
+            return donorLastDonationTextView;
         }
 
         public TextView getTimeStampTextView() {
@@ -89,8 +109,13 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
     public void onBindViewHolder(@NonNull DonorViewHolder holder, int position) {
         holder.getDonorNameTextView().setText(donors.get(position).name);
         holder.getBGTextView().setText(donors.get(position).bloodGrp);
+        holder.getDonorAddressTextView().setText(donors.get(position).address);
+        holder.getDonorDeptTextView().setText(donors.get(position).department);
+        holder.getDonorPhoneTextView().setText(donors.get(position).phone);
+        holder.getDonorLastDonationTextView().setText(donors.get(position).lastDonationDate);
         Date date = donors.get(position).timestamp.toDate();
         holder.getTimeStampTextView().setText(date.toString());
+
         if(Utility.getCurrentUser().getUid().equals(donors.get(position).getDonorId()))holder.getImgBtn().setVisibility(View.VISIBLE);
         holder.getImgBtn().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +147,7 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
                                     if(success){
                                         Utility.showToast(context,"Deleted Successfully");
                                     }
-                                    else Utility.showToast(context,"Couldn't delete doner.Try" +
+                                    else Utility.showToast(context,"Couldn't delete donor.Try" +
                                             " again later");
                                 }
                             });
