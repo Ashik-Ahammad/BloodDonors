@@ -93,4 +93,9 @@
         android:layout_below="@+id/donor_lastDonationTime_text_view"
         android:layout_marginVertical="4dp"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
 </RelativeLayout>

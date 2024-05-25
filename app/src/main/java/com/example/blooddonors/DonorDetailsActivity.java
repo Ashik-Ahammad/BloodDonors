@@ -97,12 +97,12 @@ public class DonorDetailsActivity extends AppCompatActivity {
         //create new donor
         Donor donor = new Donor();
         donor.setDonorId(Utility.getCurrentUser().getUid());
-        donor.setName(donorName);
-        donor.setBloodGrp(donorBG);
-        donor.setDepartment(donorDept);
-        donor.setLastDonationDate(donationDate);
-        donor.setAddress(donorAddress);
-        donor.setPhone(donorPhone);
+        donor.setName("Donor Name: "+donorName);
+        donor.setBloodGrp("Blood Group: "+donorBG);
+        donor.setDepartment("Department: "+donorDept);
+        donor.setLastDonationDate("Last Donated on: "+donationDate);
+        donor.setAddress("Address: "+donorAddress);
+        donor.setPhone("Phone: "+donorPhone);
         donor.setTimestamp(Timestamp.now());
 
         if(existingDonor) DonorStoreImpl.getInstance().editDonor(existingDonorDocId,donor);

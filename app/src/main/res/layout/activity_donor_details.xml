@@ -79,7 +79,7 @@
             android:id="@+id/date_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint=" Last Donation Date: DD-MM--YYYY"
+            android:hint=" Last Donation Date: D-M-Y"
             android:clickable="true"
             android:drawableLeft="@android:drawable/ic_menu_today"
             android:padding="12dp"
